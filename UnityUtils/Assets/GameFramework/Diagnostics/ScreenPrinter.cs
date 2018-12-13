@@ -3,17 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
-using Utils.Diagnostics;
 
-namespace Utils.Diagnostics
+namespace GameFramework
 {
+    [CreateAssetMenu]
+    public class ScreenPrinterContext : ScriptableObject
+    {
+        [SerializeField]
+        private Color _errorColor;
+        public Color ErrorColor { get { return _errorColor; } }
+
+        [SerializeField]
+        private Color _warningColor;
+        public Color WarningColor { get { return _warningColor; } }
+
+        [SerializeField]
+        private Color _messageColor;
+        public Color MessageColor { get { return _messageColor; } }
+    }
+
     public class ScreenPrinter : MonoBehaviour
     {
+        [SerializeField]
+        private ScreenPrinterContext _context;
+        public ScreenPrinterContext Context { get { return _context; } }
+
         private readonly List<ScreenMessage> _screenLogs = new List<ScreenMessage>();
         
         private void Awake()
-        {
-            
+        {    
             Application.logMessageReceived += OnLogMessageReceived;
             Debug.LogWarning("Hallo");
         }
@@ -35,19 +53,19 @@ namespace Utils.Diagnostics
                 switch (screenMessage.LogType)
                 {
                     case LogType.Error:
-                        logColor = UtilsInstance.Instance.Settings.DiagnosticSettings.ErrorColor;
+                        logColor = Context.ErrorColor;
                         break;
                     case LogType.Assert:
-                        logColor = UtilsInstance.Instance.Settings.DiagnosticSettings.ErrorColor;
+                        logColor = Context.ErrorColor;
                         break;
                     case LogType.Warning:
-                        logColor = UtilsInstance.Instance.Settings.DiagnosticSettings.WarningColor;
+                        logColor = Context.WarningColor;
                         break;
                     case LogType.Log:
-                        logColor = UtilsInstance.Instance.Settings.DiagnosticSettings.MessageColor;
+                        logColor = Context.MessageColor;
                         break;
                     case LogType.Exception:
-                        logColor = UtilsInstance.Instance.Settings.DiagnosticSettings.ErrorColor;
+                        logColor = Context.ErrorColor;
                         break;
                 }
 

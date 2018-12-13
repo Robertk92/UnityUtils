@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Utils.Diagnostics
+namespace GameFramework
 {
     public struct ScreenMessage
     {

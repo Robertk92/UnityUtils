@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-namespace Utils.Generic
+namespace GameFramework
 {
     public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
@@ -11,10 +11,13 @@ namespace Utils.Generic
         {
             get
             {
+                
                 if (_instance == null)
                 {
                     T[] found = Object.FindObjectsOfType<T>();
-                    Debug.AssertFormat(found.Length <= 1, string.Format("Multiple singletons of type '{0}' found", typeof(T).Name));
+                    Debug.AssertFormat(found.Length <= 1, 
+                        string.Format("Multiple singletons of type '{0}' found", typeof(T).Name));
+
                     if (found.Length == 1)
                     {
                         _instance = found[0];
@@ -29,7 +32,7 @@ namespace Utils.Generic
                 return _instance;
             }
         }
-        
+
     }
 }
 

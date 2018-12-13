@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 99ce4a366cdbb1a4fb6d80ff835e1cc7
-timeCreated: 1544446387
-licenseType: Free
+guid: 2c45b45c2d2928c47b920a244811a530
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _gameFrameworkSettings: {fileID: 11400000, guid: 90b47b40bcebcbc4093095cf0eeee4cc,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
