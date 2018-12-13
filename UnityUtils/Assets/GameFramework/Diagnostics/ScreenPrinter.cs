@@ -6,34 +6,13 @@ using UnityEngine;
 
 namespace GameFramework
 {
-    [CreateAssetMenu]
-    public class ScreenPrinterContext : ScriptableObject
+    public class ScreenPrinter : Singleton<ScreenPrinter>
     {
-        [SerializeField]
-        private Color _errorColor;
-        public Color ErrorColor { get { return _errorColor; } }
-
-        [SerializeField]
-        private Color _warningColor;
-        public Color WarningColor { get { return _warningColor; } }
-
-        [SerializeField]
-        private Color _messageColor;
-        public Color MessageColor { get { return _messageColor; } }
-    }
-
-    public class ScreenPrinter : MonoBehaviour
-    {
-        [SerializeField]
-        private ScreenPrinterContext _context;
-        public ScreenPrinterContext Context { get { return _context; } }
-
         private readonly List<ScreenMessage> _screenLogs = new List<ScreenMessage>();
         
         private void Awake()
         {    
             Application.logMessageReceived += OnLogMessageReceived;
-            Debug.LogWarning("Hallo");
         }
 
         private void OnLogMessageReceived(string condition, string stackTrace, LogType type)
@@ -53,19 +32,19 @@ namespace GameFramework
                 switch (screenMessage.LogType)
                 {
                     case LogType.Error:
-                        logColor = Context.ErrorColor;
+                        logColor = Color.red;
                         break;
                     case LogType.Assert:
-                        logColor = Context.ErrorColor;
+                        logColor = Color.red;
                         break;
                     case LogType.Warning:
-                        logColor = Context.WarningColor;
+                        logColor = Color.yellow;
                         break;
                     case LogType.Log:
-                        logColor = Context.MessageColor;
+                        logColor = Color.cyan;
                         break;
                     case LogType.Exception:
-                        logColor = Context.ErrorColor;
+                        logColor = Color.red;
                         break;
                 }
 
