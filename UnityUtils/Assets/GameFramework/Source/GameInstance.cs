@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GameFramework
 {
@@ -10,7 +8,7 @@ namespace GameFramework
         private GameFrameworkSettings _settings;
         public GameFrameworkSettings Settings { get { return _settings; } }
 
-        private void Awake()
+        protected virtual void Awake()
         {
             
         }

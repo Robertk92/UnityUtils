@@ -11,3 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200c9bc61c9dfc947bb21941ea6a12b1, type: 3}
   m_Name: GameFrameworkSettings
   m_EditorClassIdentifier: 
+  _gameInstancePrefab: {fileID: 114334553802862492, guid: db211f796ea9fa74ca3a8b838039f76d,
+    type: 2}
