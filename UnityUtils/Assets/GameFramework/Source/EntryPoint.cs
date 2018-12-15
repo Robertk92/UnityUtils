@@ -1,25 +1,30 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace GameFramework
 {
-    public class EntryPoint : MonoBehaviour
+    public static class EntryPoint
     {
-        [SerializeField]
-        public GameFrameworkSettings GameFrameworkSettings;
-        
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Main()
         {
-            // Temp create entry point gameObject for retrieving game instance prefab default value
-            GameObject epGo = new GameObject(typeof(EntryPoint).Name);
-            EntryPoint entry = epGo.AddComponent<EntryPoint>();
+            string settingsLoaderResourcesPath = "SettingsLoader";
+            SettingsLoader settingsLoader = Resources.Load<SettingsLoader>(settingsLoaderResourcesPath);
 
-            Debug.AssertFormat(entry.GameFrameworkSettings.GameInstancePrefab != null,
-                string.Format("No {0} prefab assigned in {1}", typeof(GameInstance).Name,
+            Debug.AssertFormat(settingsLoader != null,
+                string.Format("{0} not found in {1}", typeof(SettingsLoader).Name,
+                Path.Combine("Resources", settingsLoaderResourcesPath)));
+
+            Debug.AssertFormat(settingsLoader.Settings != null,
+                string.Format("{0} not assigned on {1}", typeof(GameFrameworkSettings).Name,
+                typeof(SettingsLoader).Name));
+
+            Debug.AssertFormat(settingsLoader.Settings.GameInstancePrefab != null,
+                string.Format("No {0} prefab assigned on {1}", typeof(GameInstance).Name,
                     typeof(GameFrameworkSettings).Name));
-
-            Object gameInstancePrefabs = entry.GameFrameworkSettings.GameInstancePrefab.gameObject;
+            
+            Object gameInstancePrefabs = settingsLoader.Settings.GameInstancePrefab.gameObject;
             
             Debug.AssertFormat(Object.FindObjectsOfType<GameInstance>().Length == 0,
                 string.Format("{0} found in the scene, this is not allowed. " +
@@ -32,10 +37,7 @@ namespace GameFramework
             GameObject gameInstanceGo = Object.Instantiate(gameInstancePrefabs) as GameObject;
             Debug.AssertFormat(gameInstanceGo != null, string.Format("Failed to instantiate {0}", typeof(GameInstance).Name));
             gameInstanceGo.name = string.Format("_{0}", typeof(GameInstance).Name);
-            DontDestroyOnLoad(gameInstanceGo);
-
-            // Destroy temp entry point gameObject
-            Destroy(epGo);
+            Object.DontDestroyOnLoad(gameInstanceGo);
         }
     }
 }
