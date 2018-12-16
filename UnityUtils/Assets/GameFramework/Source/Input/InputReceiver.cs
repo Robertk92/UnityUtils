@@ -12,21 +12,19 @@ namespace GameFramework
         private readonly Dictionary<InputButtonEvent, InputButtonEventDelegate> _buttonEvents = new Dictionary<InputButtonEvent, InputButtonEventDelegate>();
         private readonly Dictionary<InputAxisEvent, InputAxisEventDelegate> _axisEvents = new Dictionary<InputAxisEvent, InputAxisEventDelegate>();
 
-        public void BindButton(string inputId, InputEventPollingType inputEventPollingType, InputEventType inputEventType, 
+        public void BindButton(InputId inputId, InputEventPollingType inputEventPollingType, InputEventType inputEventType, 
             InputButtonEventDelegate handler)
         {
             InputButtonEvent inputButtonEvent = new InputButtonEvent(inputId, inputEventPollingType, inputEventType);
-            Debug.AssertFormat(!_buttonEvents.ContainsKey(inputButtonEvent), 
-                string.Format("Button binding for '{0}' with the same parameters already bound", inputId));
+            Debug.AssertFormat(!_buttonEvents.ContainsKey(inputButtonEvent), $"Button binding for '{inputId}' with the same parameters already bound");
             _buttonEvents.Add(inputButtonEvent, handler);
         }
 
-        public void BindAxis(string inputId, InputEventPollingType inputEventPollingType,
+        public void BindAxis(InputId inputId, InputEventPollingType inputEventPollingType,
             InputAxisEventDelegate handler)
         {
             InputAxisEvent inputAxisEvent = new InputAxisEvent(inputId, inputEventPollingType);
-            Debug.AssertFormat(!_axisEvents.ContainsKey(inputAxisEvent), 
-                string.Format("Axis binding for '{0}' with the same parameters already bound", inputId));
+            Debug.AssertFormat(!_axisEvents.ContainsKey(inputAxisEvent), $"Axis binding for '{inputId}' with the same parameters already bound");
             _axisEvents.Add(inputAxisEvent, handler);
         }
 

@@ -11,22 +11,22 @@ namespace GameFramework
         protected virtual void Awake()
         {
             InputReceiver = GetComponent<InputReceiver>();
-            InputReceiver.BindButton("Fire", InputEventPollingType.Update, InputEventType.Down, OnFireDown);
+            InputReceiver.BindButton(InputId.Fire, InputEventPollingType.Update, InputEventType.Down, OnFireDown);
             
-            InputReceiver.BindButton("Fire", InputEventPollingType.Update, InputEventType.Hold, OnFireHold);
-            InputReceiver.BindButton("Fire", InputEventPollingType.Update, InputEventType.Up, OnFireUp);
+            InputReceiver.BindButton(InputId.Fire, InputEventPollingType.Update, InputEventType.Hold, OnFireHold);
+            InputReceiver.BindButton(InputId.Fire, InputEventPollingType.Update, InputEventType.Up, OnFireUp);
 
-            InputReceiver.BindAxis("Horizontal", InputEventPollingType.Update, OnHorizontal);
+            InputReceiver.BindAxis(InputId.Horizontal, InputEventPollingType.Update, OnHorizontal);
         }
 
-        private void OnHorizontal(float axisvalue)
+        private void OnHorizontal(float axisValue)
         {
-            Debug.Log(axisvalue);
+            
         }
 
         private void OnFireHold()
         {
-            Debug.Log("Fire holding...");
+            
         }
 
         private void OnFireUp()
@@ -36,7 +36,7 @@ namespace GameFramework
 
         private void OnFireDown()
         {
-            Debug.Log("Fire down");
+            
         }
     }
 }

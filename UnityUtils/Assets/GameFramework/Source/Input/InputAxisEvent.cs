@@ -4,10 +4,10 @@ namespace GameFramework
 {
     public struct InputAxisEvent : IEquatable<InputAxisEvent>
     {
-        public readonly string InputId;
+        public readonly InputId InputId;
         public readonly InputEventPollingType InputEventPollingType;
         
-        public InputAxisEvent(string inputId, InputEventPollingType inputEventPollingType)
+        public InputAxisEvent(InputId inputId, InputEventPollingType inputEventPollingType)
         {
             this.InputEventPollingType = inputEventPollingType;
             this.InputId = inputId;
@@ -39,7 +39,7 @@ namespace GameFramework
         {
             unchecked
             {
-                return ((InputId != null ? InputId.GetHashCode() : 0) * 397) ^ (int) InputEventPollingType;
+                return ((InputId.GetHashCode()) * 397) ^ (int) InputEventPollingType;
             }
         }
     }

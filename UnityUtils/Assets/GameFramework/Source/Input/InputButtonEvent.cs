@@ -5,11 +5,11 @@ namespace GameFramework
 {
     public struct InputButtonEvent : IEquatable<InputButtonEvent>
     {
-        public readonly string InputId;
+        public readonly InputId InputId;
         public readonly InputEventPollingType InputEventPollingType;
         public readonly InputEventType InputEventType;
         
-        public InputButtonEvent(string inputId, InputEventPollingType inputEventPollingType, InputEventType inputEventType)
+        public InputButtonEvent(InputId inputId, InputEventPollingType inputEventPollingType, InputEventType inputEventType)
         {
             this.InputEventPollingType = inputEventPollingType;
             this.InputEventType = inputEventType;
@@ -41,7 +41,7 @@ namespace GameFramework
         {
             unchecked
             {
-                var hashCode = (InputId != null ? InputId.GetHashCode() : 0);
+                var hashCode = (InputId.GetHashCode());
                 hashCode = (hashCode * 397) ^ (int) InputEventPollingType;
                 hashCode = (hashCode * 397) ^ (int) InputEventType;
                 return hashCode;

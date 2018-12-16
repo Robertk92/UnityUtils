@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace GameFramework
 {
@@ -9,14 +10,14 @@ namespace GameFramework
         private InputReceiver _receiver;
         public InputReceiver Receiver
         {
-            get { return _receiver; }
+            get => _receiver;
             set
             {
                 if(_receiver != value)
                 {
                     _receiver = value;
-
                 }
+                
             }
         }
         
@@ -27,8 +28,11 @@ namespace GameFramework
                 return;
             }
 
-            PollButton("Fire", InputEventPollingType.FixedUpdate);
-            PollAxis("Horizontal", InputEventPollingType.FixedUpdate);
+            foreach (InputId inputId in Enum.GetValues(typeof(InputId)))
+            {
+                PollButton(inputId, InputEventPollingType.FixedUpdate);
+                PollAxis(inputId, InputEventPollingType.FixedUpdate);
+            }   
         }
 
         private void Update()
@@ -38,36 +42,36 @@ namespace GameFramework
                 return;
             }
 
-            PollButton("Fire", InputEventPollingType.Update);
-            PollAxis("Horizontal", InputEventPollingType.Update);
-        }
-
-        private void PollButton(string inputId, InputEventPollingType inputEventPollingType)
-        {
-            if (Input.GetButtonDown(inputId) && Receiver != null)
+            foreach (InputId inputId in Enum.GetValues(typeof(InputId)))
             {
-                Receiver.ReceiveButtonEvent(new InputButtonEvent(inputId, inputEventPollingType, InputEventType.Down));
-            }
-
-            if (Input.GetButtonUp(inputId) && Receiver != null)
-            {
-                Receiver.ReceiveButtonEvent(new InputButtonEvent(inputId, inputEventPollingType, InputEventType.Up));
-            }
-
-            if (Input.GetButton(inputId) && Receiver != null)
-            {
-                Receiver.ReceiveButtonEvent(new InputButtonEvent(inputId, inputEventPollingType, InputEventType.Hold));
+                PollButton(inputId, InputEventPollingType.Update);
+                PollAxis(inputId, InputEventPollingType.Update);
             }
         }
 
-        private void PollAxis(string inputId, InputEventPollingType inputEventPollingType)
+        private void PollButton(InputId inputId, InputEventPollingType inputEventPollingType)
         {
-            if (Receiver == null)
+            string inputString = GeneratedInput.Ids[inputId];
+            if (Input.GetButtonDown(inputString))
             {
-                return;
+                Receiver?.ReceiveButtonEvent(new InputButtonEvent(inputId, inputEventPollingType, InputEventType.Down));
             }
 
-            Receiver.ReceiveAxisEvent(Input.GetAxis(inputId), new InputAxisEvent(inputId, inputEventPollingType));
+            if (Input.GetButtonUp(inputString))
+            {
+                Receiver?.ReceiveButtonEvent(new InputButtonEvent(inputId, inputEventPollingType, InputEventType.Up));
+            }
+
+            if (Input.GetButton(inputString))
+            {
+                Receiver?.ReceiveButtonEvent(new InputButtonEvent(inputId, inputEventPollingType, InputEventType.Hold));
+            }
+        }
+
+        private void PollAxis(InputId inputId, InputEventPollingType inputEventPollingType)
+        {
+            string inputString = GeneratedInput.Ids[inputId];
+            Receiver?.ReceiveAxisEvent(Input.GetAxis(inputString), new InputAxisEvent(inputId, inputEventPollingType));
         }
     }
 }
