@@ -14,6 +14,7 @@ namespace GameFramework
 
         [SerializeField] private GameObject _playerPrefab = null;
         public  GameObject PlayerPrefab => _playerPrefab;
+        
     }
     
 }

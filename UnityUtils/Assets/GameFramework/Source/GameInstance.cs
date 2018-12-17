@@ -7,13 +7,13 @@ namespace GameFramework
         [SerializeField] private GameFrameworkSettings _settings = null;
         public GameFrameworkSettings Settings => _settings; 
 
-        public InputManager InputManager { get; private set; }
+        public InputPoller InputPoller { get; private set; }
 
         protected virtual void Awake()
         {
             // Instantiate the input manager
             GameObject inputManagerGo = new GameObject("_InputManager");
-            InputManager = inputManagerGo.AddComponent<InputManager>();
+            InputPoller = inputManagerGo.AddComponent<InputPoller>();
             DontDestroyOnLoad(inputManagerGo);
             
             if (Settings.PlayerPrefab != null)
@@ -23,7 +23,7 @@ namespace GameFramework
                 InputReceiver playerInputReceiver = player.GetComponent<InputReceiver>();
                 if (playerInputReceiver != null)
                 {
-                    InputManager.Receiver = playerInputReceiver;
+                    InputPoller.Receiver = playerInputReceiver;
                 }
             }
         }

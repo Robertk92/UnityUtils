@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace GameFramework
 {
-    public sealed class InputManager : MonoBehaviour
+    public sealed class InputPoller : MonoBehaviour
     {
         private InputReceiver _receiver;
         public InputReceiver Receiver
@@ -27,7 +25,7 @@ namespace GameFramework
             {
                 return;
             }
-
+            
             foreach (InputId inputId in Enum.GetValues(typeof(InputId)))
             {
                 PollButton(inputId, InputEventPollingType.FixedUpdate);

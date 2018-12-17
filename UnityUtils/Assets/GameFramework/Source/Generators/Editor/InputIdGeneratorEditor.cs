@@ -20,7 +20,7 @@ namespace GameFramework
             builder.AppendLine("{");
             builder.AppendLine("\tpublic enum InputId");
             builder.AppendLine("\t{");
-
+            
             Dictionary<string, string> cache = new Dictionary<string, string>();
             for (int i = 0; i < axesProperty.arraySize; i++)
             {
