@@ -20,9 +20,10 @@ namespace AssetFinder
 		private const float OptionsButtonWidth = 18;
 		private const float SpaceToResultsList = 28;
 
-		[MenuItem("Tools/m_Asset Finder %,")] // CTRL + ,
+		[MenuItem("Window/Asset Finder %,")] // CTRL + ,
 		private static void OpenAssetFinder()
 		{
+            
 			if (m_CurrentWindow == null)
 			{
 				m_CurrentWindow = CreateInstance<AssetFinder>();

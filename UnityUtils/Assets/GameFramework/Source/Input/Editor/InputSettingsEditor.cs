@@ -18,7 +18,7 @@ namespace GameFramework
 
         private void OnGUI()
         {
-            
+            GUILayout.Label("Input Settings");
         }
     }
 }
