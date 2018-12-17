@@ -5,13 +5,12 @@ using UnityEngine;
 
 namespace GameFramework
 {
-    [CustomEditor(typeof(InputSettings))]
-    public class InputSettingsEditor : EditorWindow
+    public class InputSettingsEditorWindow : EditorWindow
     {
         [MenuItem("GameFramework/Input Settings")]
         private static void OpenInputSettings()
         {
-            InputSettingsEditor inputSettings = GetWindow<InputSettingsEditor>();
+            InputSettingsEditorWindow inputSettings = GetWindow<InputSettingsEditorWindow>();
             inputSettings.titleContent = new GUIContent(nameof(InputSettings));
             inputSettings.Show();
         }
