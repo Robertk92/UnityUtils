@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using Rewired;
 using UnityEngine;
 
 namespace GameFramework
@@ -9,30 +9,54 @@ namespace GameFramework
 
     public sealed class InputReceiver : MonoBehaviour
     {
-        private readonly Dictionary<InputButtonEvent, InputButtonEventDelegate> _buttonEvents = new Dictionary<InputButtonEvent, InputButtonEventDelegate>();
+        public InputPlayer InputPlayer;
+
+        private readonly Dictionary<InputActionEvent, InputButtonEventDelegate> _buttonEvents = new Dictionary<InputActionEvent, InputButtonEventDelegate>();
         private readonly Dictionary<InputAxisEvent, InputAxisEventDelegate> _axisEvents = new Dictionary<InputAxisEvent, InputAxisEventDelegate>();
 
-        public void BindButton(InputId inputId, InputEventPollingType inputEventPollingType, InputEventType inputEventType, 
-            InputButtonEventDelegate handler)
+        private PlayerInputController _playerInputController;
+
+        private void Start()
         {
-            InputButtonEvent inputButtonEvent = new InputButtonEvent(inputId, inputEventPollingType, inputEventType);
-            Debug.AssertFormat(!_buttonEvents.ContainsKey(inputButtonEvent), $"Button binding for '{inputId}' with the same parameters already bound");
-            _buttonEvents.Add(inputButtonEvent, handler);
+            _playerInputController = FindObjectOfType<PlayerInputController>();
         }
 
-        public void BindAxis(InputId inputId, InputEventPollingType inputEventPollingType,
+        public void BindButton(int actionId, InputEventPollingType inputEventPollingType, InputEventType inputEventType,
+            InputButtonEventDelegate handler)
+        {
+            InputActionEvent inputActionEvent = new InputActionEvent(actionId, inputEventPollingType, inputEventType);
+            Debug.AssertFormat(!_buttonEvents.ContainsKey(inputActionEvent), $"Button binding for '{actionId}' with the same parameters already bound");
+            _buttonEvents.Add(inputActionEvent, handler);
+        }
+
+        public void BindAxis(int actionId, InputEventPollingType inputEventPollingType,
             InputAxisEventDelegate handler)
         {
-            InputAxisEvent inputAxisEvent = new InputAxisEvent(inputId, inputEventPollingType);
-            Debug.AssertFormat(!_axisEvents.ContainsKey(inputAxisEvent), $"Axis binding for '{inputId}' with the same parameters already bound");
+            InputAxisEvent inputAxisEvent = new InputAxisEvent(actionId, inputEventPollingType);
+            Debug.AssertFormat(!_axisEvents.ContainsKey(inputAxisEvent), $"Axis binding for '{actionId}' with the same parameters already bound");
             _axisEvents.Add(inputAxisEvent, handler);
         }
 
-        internal void ReceiveButtonEvent(InputButtonEvent inputButtonEvent)
+        /// <summary>
+        /// </summary>
+        /// <param name="motorIndex"></param>
+        /// <param name="amount">Intensity of the rumble (between 0.0f and 1.0f)</param>
+        /// <param name="duration">The duration of the rumble (0.0f means indefinite)</param>
+        public void SetRumble(int motorIndex, float amount, float duration = 0.0f)
         {
-            foreach (KeyValuePair<InputButtonEvent, InputButtonEventDelegate> keyValuePair in _buttonEvents)
+            _playerInputController.SetRumble(InputPlayer, motorIndex, amount, duration);
+        }
+
+        public void StopRumble()
+        {
+            _playerInputController.StopRumble(InputPlayer);
+        }
+
+        internal void ReceiveButtonEvent(InputActionEvent inputActionEvent)
+        {
+            foreach (KeyValuePair<InputActionEvent, InputButtonEventDelegate> keyValuePair in _buttonEvents)
             {
-                if (keyValuePair.Key != inputButtonEvent)
+                if (keyValuePair.Key != inputActionEvent)
                 {
                     continue;
                 }
