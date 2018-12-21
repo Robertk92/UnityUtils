@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using GameFramework;
 using GameFramework.GeneratedInput;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(InputReceiver))]
 public class Player : Character
@@ -17,7 +18,7 @@ public class Player : Character
 
         InputReceiver.BindButton(Action.Fire, InputEventPollingType.Update, InputEventType.Hold, OnFireHold);
         InputReceiver.BindButton(Action.Fire, InputEventPollingType.Update, InputEventType.Up, OnFireUp);
-
+        
         InputReceiver.BindAxis(Action.Move_Horizontal, InputEventPollingType.Update, OnHorizontal);
     }
 
@@ -39,7 +40,7 @@ public class Player : Character
 
     private void OnFireDown()
     {
-        Debug.Log("Fire with Rewired");
+        
     }
     
 }

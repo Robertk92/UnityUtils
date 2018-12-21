@@ -1,6 +1,6 @@
 To use the GameFramework you need to do the following setup:
 
-1) Create a new class that inherits from GameInstance
+1) Create a new class that inherits from GameBase
 2) Create a prefab with this newly created class as it's (only) component
 3) Assign this prefab in the GameFrameworkSettings scriptable object
 

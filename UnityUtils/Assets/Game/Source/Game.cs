@@ -1,9 +1,9 @@
 ﻿using GameFramework;
 using UnityEngine;
 
-public class Game : GameInstance
+public class Game : GameBase
 {
-    public new static Game Instance => (Game)GameInstance.Instance;
+    public new static Game Instance => (Game)GameBase.Instance;
     
     protected override void Awake()
     {

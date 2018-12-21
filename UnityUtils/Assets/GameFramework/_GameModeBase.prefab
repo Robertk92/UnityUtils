@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5204439329645579764}
   - component: {fileID: 5204439329645579765}
   m_Layer: 0
-  m_Name: GameModeBase
+  m_Name: _GameModeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,3 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde2f9812020a5249b37ae36d0ff3aca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerPrefab: {fileID: 0}
+  _autoSpawnPlayer: 1

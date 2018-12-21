@@ -7,8 +7,8 @@ namespace GameFramework
     public class GameFrameworkSettings : ScriptableObject
     {
         [SerializeField]
-        private GameInstance _gameInstancePrefab = null;
-        public GameInstance GameInstancePrefab => _gameInstancePrefab;
+        private GameBase _gamePrefab = null;
+        public GameBase GamePrefab => _gamePrefab;
 
         [SerializeField]
         private Rewired.InputManager _rewiredInputManagerPrefab = null;

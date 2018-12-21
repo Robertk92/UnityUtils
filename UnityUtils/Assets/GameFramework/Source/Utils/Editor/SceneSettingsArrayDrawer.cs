@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEditor;
 
@@ -11,6 +12,25 @@ namespace GameFramework
         public override void OnGUI(Rect rect, SerializedProperty property, GUIContent label)
         {     
             GameFrameworkSettings target = property.serializedObject.targetObject as GameFrameworkSettings;
+
+            // Duplicate check
+            for (int i = target.GameModeOverrides.Count - 1; i >= 0; i--)
+            {
+                if (target.GameModeOverrides[i].Scene == null)
+                {
+                    continue;
+                }
+
+                if (target.GameModeOverrides.
+                        Where(x => x.Scene != null).
+                        Count(y => y.Scene.ScenePath == target.GameModeOverrides[i].Scene.ScenePath) > 1)
+                {
+                    target.GameModeOverrides[i].Scene = null;
+                    target.GameModeOverrides[i].GameModePrefab = null;
+                    EditorUtility.SetDirty(property.serializedObject.targetObject);
+                }
+            }
+            
             SceneGameModePair settings = null;
             int index = 0;
             
@@ -22,7 +42,7 @@ namespace GameFramework
                     settings = target.GameModeOverrides[index];
                 }
             }
-
+            
             string title = "None";
 
             bool greenlit = false;

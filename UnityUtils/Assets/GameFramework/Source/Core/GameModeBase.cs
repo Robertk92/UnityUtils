@@ -9,6 +9,26 @@ namespace GameFramework
 {
     public class GameModeBase : MonoBehaviour
     {
+        [SerializeField]
+        private GameObject _playerPrefab = null;
+        public GameObject PlayerPrefab => _playerPrefab;
+
+        [SerializeField]
+        private bool _autoSpawnPlayer = true;
+        public bool AutoSpawnPlayer => _autoSpawnPlayer;
+        
+        protected virtual void Awake()
+        {
+            GameFrameworkSettings settings = GameBase.Instance.Settings;
+            if (AutoSpawnPlayer)
+            {
+                if (PlayerPrefab != null)
+                {
+                    SpawnPlayer(PlayerPrefab);
+                }
+            }
+        }
+
         /// <summary>
         /// Spawns the player gameObject on a free PlayerSpawn in the scene
         /// </summary>
@@ -27,7 +47,7 @@ namespace GameFramework
 
             if (inputReceiver != null && autoPossess)
             {
-                GameInstance.Instance.PlayerInputController.Possess(inputReceiver);
+                GameBase.Instance.PlayerInputController.Possess(inputReceiver);
             }
 
             return player;

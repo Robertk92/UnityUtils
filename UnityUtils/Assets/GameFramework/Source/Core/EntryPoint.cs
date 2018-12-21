@@ -18,23 +18,23 @@ namespace GameFramework
             Debug.AssertFormat(settingsLoader.Settings != null,
                 $"{typeof(GameFrameworkSettings).Name} not assigned on {typeof(SettingsLoader).Name}");
 
-            Debug.AssertFormat(settingsLoader.Settings.GameInstancePrefab != null,
-                $"No {typeof(GameInstance).Name} prefab assigned on {typeof(GameFrameworkSettings).Name}");
+            Debug.AssertFormat(settingsLoader.Settings.GamePrefab != null,
+                $"No {typeof(GameBase).Name} prefab assigned on {typeof(GameFrameworkSettings).Name}");
             
-            Object gameInstancePrefabs = settingsLoader.Settings.GameInstancePrefab.gameObject;
+            Object gamePrefab = settingsLoader.Settings.GamePrefab.gameObject;
             
-            Debug.AssertFormat(Object.FindObjectsOfType<GameInstance>().Length == 0,
-                $"{typeof(GameInstance).Name} found in the scene, this is not allowed. " +
-                $"Remove the {typeof(GameInstance).Name} from your scene (it will be created automatically before scene load)");
+            Debug.AssertFormat(Object.FindObjectsOfType<GameBase>().Length == 0,
+                $"{typeof(GameBase).Name} found in the scene, this is not allowed. " +
+                $"Remove the {typeof(GameBase).Name} from your scene (it will be created automatically before scene load)");
             
-            Debug.AssertFormat(gameInstancePrefabs != null,
-                $"{typeof(GameInstance).Name} prefab not found in {typeof(EntryPoint).Name} (default value field)");
+            Debug.AssertFormat(gamePrefab != null,
+                $"{typeof(GameBase).Name} prefab not found in {typeof(EntryPoint).Name} (default value field)");
             
             // Instantiate the game instance
-            GameObject gameInstanceGo = Object.Instantiate(gameInstancePrefabs) as GameObject;
-            Debug.AssertFormat(gameInstanceGo != null, $"Failed to instantiate {typeof(GameInstance).Name}");
-            gameInstanceGo.name = $"_{typeof(GameInstance).Name}";
-            Object.DontDestroyOnLoad(gameInstanceGo);
+            GameObject gameGo = Object.Instantiate(gamePrefab) as GameObject;
+            Debug.AssertFormat(gameGo != null, $"Failed to instantiate {typeof(GameBase).Name}");
+            gameGo.name = $"_{typeof(GameBase).Name}";
+            Object.DontDestroyOnLoad(gameGo);
         }
     }
 }

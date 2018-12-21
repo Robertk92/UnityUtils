@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Rewired;
 using UnityEngine;
 
 using ReInput = Rewired.ReInput;
@@ -10,8 +9,9 @@ namespace GameFramework
     public sealed class PlayerInputController : MonoBehaviour
     {
         private Dictionary<InputPlayer, InputReceiver> _receivers = new Dictionary<InputPlayer, InputReceiver>();
+        public IEnumerable<KeyValuePair<InputPlayer, InputReceiver>> Receivers => _receivers;
 
-        private void Start()
+        private void Awake()
         {
             foreach (InputPlayer player in Enum.GetValues(typeof(InputPlayer)))
             {
